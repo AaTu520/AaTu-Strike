@@ -1,0 +1,26 @@
+modLoader="javafml"
+loaderVersion="[4,)"
+license="All Rights Reserved"
+
+[[mods]]
+modId="aatu_strike"
+version="${mod_version}"
+displayName="AaTu Strike"
+description='''Projectile headshots, sneak charging, directional dashes, bed trampolines, and arrows that break melons. Supports dedicated servers and single-player worlds.'''
+
+[[dependencies.aatu_strike]]
+modId="neoforge"
+type="required"
+versionRange="[21.1.250,21.2)"
+ordering="NONE"
+side="BOTH"
+
+[[mixins]]
+config="aatu_strike.mixins.json"
+
+[[dependencies.aatu_strike]]
+modId="minecraft"
+type="required"
+versionRange="[1.21.1]"
+ordering="NONE"
+side="BOTH"

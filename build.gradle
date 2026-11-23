@@ -1,0 +1,59 @@
+plugins {
+    id 'base'
+    id 'net.neoforged.moddev' version '2.0.115' apply false
+}
+
+subprojects {
+    apply plugin: 'java-library'
+    apply plugin: 'net.neoforged.moddev'
+
+    group = 'cn.aatu.servermods'
+    version = rootProject.mod_version
+    java.toolchain.languageVersion = JavaLanguageVersion.of(21)
+    java.withSourcesJar()
+
+    repositories { mavenCentral() }
+
+    neoForge {
+        version = rootProject.neo_version
+        runs {
+            server {
+                server()
+                gameDirectory = layout.projectDirectory.dir('run/server')
+                programArgument '--nogui'
+            }
+        }
+        mods {
+            register(project.name.replace('-', '_')) {
+                sourceSet sourceSets.main
+            }
+        }
+    }
+
+    dependencies {
+        testImplementation 'org.junit.jupiter:junit-jupiter:5.10.0'
+        testRuntimeOnly 'org.junit.platform:junit-platform-launcher:1.10.0'
+    }
+
+    tasks.withType(JavaCompile).configureEach { options.encoding = 'UTF-8' }
+    tasks.withType(Test).configureEach { useJUnitPlatform() }
+    tasks.withType(Jar).configureEach {
+        preserveFileTimestamps = false
+        reproducibleFileOrder = true
+    }
+    tasks.named('processResources') {
+        inputs.property 'mod_version', project.version
+        filesMatching('META-INF/neoforge.mods.toml') {
+            expand(mod_version: project.version)
+        }
+    }
+}
+
+tasks.register('dist', Copy) {
+    def releasedMods = [project(':aatu-strike')]
+    dependsOn releasedMods.collect { it.tasks.named('build') }
+    from(releasedMods.collect { it.tasks.named('jar') })
+    from('README.md')
+    from('config-examples') { into 'config-examples' }
+    into layout.projectDirectory.dir('dist')
+}

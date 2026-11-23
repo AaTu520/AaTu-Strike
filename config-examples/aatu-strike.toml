@@ -1,0 +1,37 @@
+[general]
+# 总开关。修改后重启生效。
+enabled = true
+
+[charge]
+# 消耗后须松开潜行键并重新按下，才能再次蓄力。
+enabled = true
+# 每秒按 20 游戏刻计算。
+fullChargeSeconds = 6.0
+# 额外增加 500%，总伤害为 6 倍。
+maximumBonusPercent = 500.0
+
+[headshot]
+enabled = true
+# 与蓄力倍率相乘。
+multiplier = 2.0
+# 碰撞箱顶部四分之一作为头部区域。
+headHeightFraction = 0.25
+# 有效爆头后向射手显示中央标题“精准打击”。
+showTitle = true
+# 30% 概率等概率抽取反胃、失明、缓慢之一，一级，持续 3 秒；设为 0 可关闭。
+effectChancePercent = 30.0
+
+[flight]
+enabled = true
+# 单位：格/秒；沿触发方向增加速度，推进期间仅补足前向速度，可调低。
+maximumAddedSpeed = 8.0
+# 本次冲刺设置的总速度上限。当前已达到上限时不启动冲刺。
+maximumBoostedSpeed = 48.0
+# 满蓄力推进目标为 40 格，半蓄力为 20 格；结束后由原有移动处理惯性。
+maximumDistance = 40.0
+
+[fun]
+# 落床免摔落并自动反弹；目标为下落高度的 1.25 倍，最低约 2 格，无高度上限。
+bedTrampoline = true
+# 玩家射出的箭可打碎西瓜，遵循破坏权限与原版西瓜片掉落规则。
+melonArrows = true
